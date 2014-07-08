@@ -1,5 +1,5 @@
 var assert = require("assert");
-var Cycle = require('../app/cycle');
+var Cycle = require('../cycle');
 
 
 describe('Cycle', function(){

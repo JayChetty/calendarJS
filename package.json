@@ -1,0 +1,25 @@
+{
+  "name": "MoonthCalendar",
+  "version": "0.0.0",
+  "description": "SolarLunar Calendar",
+  "main": "earth_cycles.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JayChetty/calendarJS.git"
+  },
+  "author": "Jay Chetty <jaypaulchetty@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayChetty/calendarJS/issues"
+  },
+  "homepage": "https://github.com/JayChetty/calendarJS",
+  "devDependencies": {
+    "mocha": "^1.20.1"
+  }
+}

@@ -1,5 +1,5 @@
 var assert = require("assert");
-var EarthCycles = require('../app/earth_cycles');
+var EarthCycles = require('../earth_cycles');
 
 describe('EarthCycles', function(){
 
