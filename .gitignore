@@ -229,3 +229,4 @@
 /node_modules/mocha/node_modules/mkdirp/.travis.yml
 /node_modules/mocha/package.json
 /node_modules/mocha/Readme.md
+/npm-debug.log
