@@ -69,6 +69,16 @@ describe('Cycle', function(){
     assert.equal(cycle2.dayOfCycle(), 1);
   })
 
+  it('should adjust to goes back to previous when zero day', function(){
+    var anchor = new Date(2013,3,1,12,50,59,99);
+    var length = 60*60*24*10*1000; //ten days
+    var oneHourAfterAnchor = new Date(2013,3,1,13,50,59,99);
+    var oneDayAfterAnchor= new Date(2013,3,2,12,50,59,99);
+
+    var cycle1 = new Cycle(anchor.valueOf(), length, oneHourAfterAnchor.valueOf(), true);
+    assert.equal(cycle1.dayOfCycle(), 9);
+  })
+
 
 
 })

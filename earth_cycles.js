@@ -13,10 +13,8 @@ var EarthCycles = function(pointInTime){
 
   this.YEAR_IN_MOONTHS = (this.YEAR_IN_SECONDS/this.MOONTH_IN_SECONDS);
 
-  this.year = new Cycle(this.AN_AXIS_MAX_N.valueOf(),this.YEAR_IN_MILLISECONDS, pointInTime);
-  this.moonth = new Cycle(this.A_NEW_MOON.valueOf(), this.MOONTH_IN_MILLISECONDS, pointInTime);
-
-
+  this.year = new Cycle(this.AN_AXIS_MAX_N.valueOf(),this.YEAR_IN_MILLISECONDS, pointInTime, true);
+  this.moonth = new Cycle(this.A_NEW_MOON.valueOf(), this.MOONTH_IN_MILLISECONDS, pointInTime, true);
 
   this.yearsPassed = function(){
     return (this.year.cyclesSinceAnchor());
@@ -26,8 +24,6 @@ var EarthCycles = function(pointInTime){
     return (this.year.dayOfCycle());
   }
 
-
-
   this.firstNewDayOfYear = function(){
     return (this.year.firstDayStartOfCurrentCycle());
   }
@@ -35,10 +31,6 @@ var EarthCycles = function(pointInTime){
   this.lastEndDayOfYear = function(){
     return (this.year.lastDayEndOfCurrentCycle());
   }
-
-  // this.yearLength = function(){
-  //   return this.lastEndDayOfYear() - this.firstNewDayOfYear()
-  // }
 
   this.daysInYear = function(){
     return(this.year.daysInCycle())
@@ -48,16 +40,37 @@ var EarthCycles = function(pointInTime){
     return(ms/this.DAY_IN_MILLISECONDS)
   }
 
-  // this.moonthsOfYear = function(){
-  //   startDay = this.firstNewDayOfYear()
-  //   firstMoonthDay = this.firstNewMoonOfYear()
-  //   zeroMonthDays =  this.msToDays(firstMoonthDay - startDay)
+  this.moonthsOfYear = function(){
+    moonths = []
+    point = this.firstNewDayOfYear()
+    sum = 0
 
-  //   moonth.
+    while (point < this.lastEndDayOfYear()) {
+      moonth = new Cycle(this.A_NEW_MOON.valueOf(), this.MOONTH_IN_MILLISECONDS, point, true);
+      startDayMoonth = moonth.firstDayStartOfCurrentCycle()
+      endDayMoonth = moonth.lastDayEndOfCurrentCycle()
 
-  //   console.log('zeroMontdays', zeroMonthDays)
+      if (moonths.length === 0) {
+        daysInMoonth =  this.msToDays(endDayMoonth - point)
+      }
+      else {
+        if (endDayMoonth > this.lastEndDayOfYear()){
+          daysInMoonth = this.msToDays(this.lastEndDayOfYear() - startDayMoonth)
+        }
+        else {
+          daysInMoonth =  moonth.daysInCycle()
+        }
+      }
 
-  // }
+      moonths.push(daysInMoonth)
+      sum = sum + daysInMoonth
+
+      point = endDayMoonth + this.DAY_IN_MILLISECONDS
+    }
+
+    return(moonths)
+
+  }
 
 
   this.dayOfMoonth = function(){
@@ -66,33 +79,38 @@ var EarthCycles = function(pointInTime){
 
   this.firstNewMoonOfYear = function(){
     var startOfYear = this.year.firstDayStartOfCurrentCycle();
-    return (this.moonth.lastDayEndOfCurrentCycle(startOfYear));
-  }
-
-  this.firstNewDayOfMoonth = function(){
-    return (this.moonth.firstDayStartOfCurrentCycle());
+    moonth = new Cycle(this.A_NEW_MOON.valueOf(), this.MOONTH_IN_MILLISECONDS, startOfYear , true);
+    return (moonth.lastDayEndOfCurrentCycle(startOfYear));
   }
 
   this.moonthOfYear = function(){
-    var adjustedTime =  - this.firstNewMoonOfYear();
-    return (Math.ceil(adjustedTime/this.MOONTH_IN_MILLISECONDS) + 1);
+    found = false
+    index = 0
+    sum = 0
+    while (!found) {
+      sum = sum + this.moonths[index]
+      if ( this.dayOfYear() < sum) {
+        found = true
+      }
+      else {
+        index = index + 1
+      }
+    }
+
+    return (index)
   }
 
-  // this.moonthsInYear = function(){
-  //   var firstMoonthLag = this.firstNewMoonOfYear() - this.year.startOfCurrentCycle();
-  //   return Math.ceil((this.YEAR_IN_MILLISECONDS - firstMoonthLag)/this.MOONTH_IN_MILLISECONDS);
-  // }
 
   this.daysInMoonth = function(){
     return(this.moonth.daysInCycle())
   }
 
 
-
-
   this.displayString = function(){
     return "The " + this.dayOfMoonth() + "/" +this.daysInMoonth() + " day of the " + this.moonthOfYear() + "/" + this.moonthsInYear() + " Moonth of Year "
-  }
+  };
+
+  this.moonths = this.moonthsOfYear();
 
 
 }
