@@ -1,13 +1,13 @@
 {
-  "name": "MoonthCalendar",
+  "name": "natural_calendar",
   "version": "0.0.0",
-  "description": "SolarLunar Calendar",
+  "description": "Solar Lunar Calendar",
   "main": "earth_cycles.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
