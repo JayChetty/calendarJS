@@ -53,10 +53,8 @@ var Cycle = function(anchor, lengthInMilliseconds, pointInTime, adjust){
   this.daysInCycle = function(){
     return(Math.round(this.length() / (60*60*24*1000)))
   }
-  // console.log('thinking about adjuting', adjust)
-  // console.log('thinking about adjuting', adjust)
+
   if (this.dayOfCycle() === 0 && adjust) {
-    console.log('adjusting')
     this.pointInTime = this.pointInTime - (60*60*24*1000)
   }
 
