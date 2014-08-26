@@ -89,9 +89,9 @@ EarthCycles.prototype = {
   },
 
   moonthOfYear:function(){
-    found = false;
-    index = 0;
-    sum = 0;
+    var found = false;
+    var index = 0;
+    var sum = 0;
     while (!found) {
       sum = sum + this.moonths[index];
       if ( this.dayOfYear() < sum) {
@@ -102,7 +102,7 @@ EarthCycles.prototype = {
       }
     }
 
-    return (index);
+    return (index + 1);
   },
 
 

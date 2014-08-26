@@ -43,7 +43,7 @@ describe('EarthCycles', function(){
     
     var time = new Date(2013,6,12,12,00).valueOf();
     var earthCycles = new EarthCycles(time);
-    assert.equal(earthCycles.moonthOfYear(), 7); 
+    assert.equal(earthCycles.moonthOfYear(), 8); 
   })
 
   // it('should show the number of moonths in year', function(){
